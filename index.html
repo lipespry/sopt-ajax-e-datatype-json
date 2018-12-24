@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tutorial ajax por LipESprY</title>
+        <script type="text/javascript" src="jquery-1.12.4.min.js"></script>
+    </head>
+    <body>
+        <div id="tudo">Retorno aqui</div>
+        <button id="btnGatilho">Clique aqui</button>
+    </body>
+    <script type="text/javascript">
+        $(function(){
+            $('#btnGatilho').on('click', function(e){
+                e.preventDefault();
+
+                // INÍCIO DO CÓDIGO COPIADO DA PERGUNTA (FOI ADAPTADO/CORRIGIDO)
+                $.ajax({
+                    type: "GET",
+                    url: "servicos.php",
+                    data: "id=1",
+                    dataType: 'json', // ==========================> Essa linha bem aqui
+                    success: function(retorno,status){
+                    // retorno = JSON.parse(retorno);
+
+                    // Quando o json retornado é matriz de objetos: [{"id":1, "nome":"juca", ...}, {...}]
+                    // $("#tudo").html(retorno[0].nome);
+
+                    // Quando o json retornado é um único objeto: {"id":1, "nome":"juca", ...}
+                    $("#tudo").html(retorno.nome);
+                },
+                error: function(retorno,erro){
+
+                    $("#tudo").html(retorno.responseText); //Nem mexi aqui
+
+                }
+                });
+                // FIM DO CÓDIGO COPIADO DA PERGUNTA
+
+
+            });
+
+            // Exemplo mencionado na resposta
+            json = JSON.parse('[{"id":0,"nome":"jao","status":1},{"id":1,"nome":"juca","status":1},{"id":2,"nome":"ze","status":0}]');
+
+            console.log(json[0].nome);  //jao
+            console.log(json[1].nome);  //juca
+            console.log(json[2].nome);  //ze
+        });
+    </script>
+</html>
